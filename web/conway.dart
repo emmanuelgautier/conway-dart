@@ -1,17 +1,33 @@
 import 'dart:html';
 import 'dart:math';
 
+final String black = "#000000";
+final String white = "#FFFFFF";
+
+num canvas_height;
+num canvas_width;
 num height;
 num width;
-CanvasElement canvas = query('#conway');
-CanvasRenderingContext2D ctx = canvas.context2d;
+num size_pixel;
+final CanvasElement canvas = query('#conway');
+final CanvasRenderingContext2D ctx = canvas.context2d;
 
 List conwayData;
 
 void main() {
-  width = canvas.width;
-  height = canvas.height;
+  var container = query(".container");
+
+  canvas.width = window.screen.available.width;
+  canvas.height = window.screen.available.height;
   
+  canvas_width = canvas.width;
+  canvas_height = canvas.height;
+
+  height = 150;
+  width = 150;
+  
+  size_pixel = canvas_height / height;
+
   conwayData = new List(height);
 
   var r = new Random(), i, j;
@@ -95,9 +111,6 @@ void conway(){
 }
 
 void draw(){
-  var black = "#000000";
-  var white = "#FFFFFF";
-
   for(var i = 0; i < height; i++){
     for(var j = 0; j < width; j++){
       if(conwayData[i][j] == 0){
@@ -106,7 +119,7 @@ void draw(){
         ctx.fillStyle = black;
       }
       
-      ctx.fillRect(i, j, 1, 1);
+      ctx.fillRect(i * size_pixel, j * size_pixel, size_pixel, size_pixel);
     }
   }
 }
